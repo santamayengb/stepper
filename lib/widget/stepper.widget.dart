@@ -23,14 +23,23 @@ class _StepperWidgetState extends State<StepperWidget> {
       onStepTapped: _ontapped,
       controlsBuilder: (BuildContext c, ControlsDetails details) {
         return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            const SizedBox(
+              width: 10,
+            ),
             TextButton(
               onPressed: details.onStepCancel,
-              child: const Text('CANCEL'),
+              child:
+                  const Text('Cancel', style: TextStyle(color: Colors.white)),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.red)),
             ),
             TextButton(
               onPressed: details.onStepContinue,
-              child: const Text('NEXT'),
+              child: const Text('NEXT', style: TextStyle(color: Colors.white)),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.red)),
             ),
           ],
         );
