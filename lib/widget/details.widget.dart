@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../core/fw_input_decoration.dart';
+
 class DetailWidget extends StatefulWidget {
   const DetailWidget({Key? key}) : super(key: key);
 
@@ -27,6 +29,18 @@ class _DetailWidgetState extends State<DetailWidget> {
         TextFormField(
           decoration: fwInputDecoration("Restaurant Alternate Address"),
         ),
+        const SizedBox(height: 10),
+        TextFormField(
+          decoration: fwInputDecoration("Restaurant Phone number"),
+        ),
+        const SizedBox(height: 10),
+        TextFormField(
+          decoration: fwInputDecoration("Restaurant Alt Phone number"),
+        ),
+        const SizedBox(height: 10),
+        TextFormField(
+          decoration: fwInputDecoration("Location"),
+        ),
       ],
     );
   }
@@ -42,23 +56,4 @@ class _DetailWidgetState extends State<DetailWidget> {
 
   //designs
 
-  InputDecoration fwInputDecoration(String title) {
-    return InputDecoration(
-      label: Text(title),
-      enabledBorder: const OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Color.fromARGB(0, 0, 0, 0),
-          width: 2,
-        ),
-      ),
-      filled: true,
-      fillColor: Colors.grey[300],
-      focusedBorder: const OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Color(0x00000000),
-          width: 1,
-        ),
-      ),
-    );
-  }
 }
