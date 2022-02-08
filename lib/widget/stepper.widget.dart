@@ -14,11 +14,9 @@ class StepperWidget extends StatefulWidget {
 
 class _StepperWidgetState extends State<StepperWidget> {
   int currentstep = 0;
-  String buttonState = "CONTINUE";
 
   @override
   Widget build(BuildContext context) {
-    log(buttonState);
     return Stepper(
         type: StepperType.horizontal,
         currentStep: currentstep,
@@ -32,11 +30,11 @@ class _StepperWidgetState extends State<StepperWidget> {
             children: [
               ctl.onStepCancel != null
                   ? ElevatedButton(
-                      onPressed: ctl.onStepCancel, child: const Text("CANCEL"))
+                      onPressed: ctl.onStepCancel, child: const Text("BACK"))
                   : Container(),
               const SizedBox(width: 10),
               ElevatedButton(
-                  onPressed: ctl.onStepContinue, child: Text(buttonState))
+                  onPressed: ctl.onStepContinue, child: const Text("CONTINUE"))
             ],
           );
         });
@@ -64,7 +62,8 @@ class _StepperWidgetState extends State<StepperWidget> {
       return;
     } else if (currentstep == getSteps().length - 1) {
       setState(() {
-        buttonState == "SUMBIT";
+        //this is the last step where we can upload the data in the server
+        log("submited");
       });
     } else {
       setState(() {
