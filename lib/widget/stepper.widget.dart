@@ -14,43 +14,32 @@ class StepperWidget extends StatefulWidget {
 
 class _StepperWidgetState extends State<StepperWidget> {
   int currentstep = 0;
+  String buttonState = "CONTINUE";
+
   @override
   Widget build(BuildContext context) {
+    log(buttonState);
     return Stepper(
-      type: StepperType.horizontal,
-      currentStep: currentstep,
-      steps: getSteps(),
-      onStepContinue: _continue,
-      onStepCancel: _cancel,
-      onStepTapped: _ontapped,
-      controlsBuilder: (BuildContext c, ControlsDetails details) {
-        return SizedBox(
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const SizedBox(
-                width: 10,
-              ),
-              TextButton(
-                onPressed: details.onStepCancel,
-                child:
-                    const Text('Cancel', style: TextStyle(color: Colors.white)),
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.red)),
-              ),
-              TextButton(
-                onPressed: details.onStepContinue,
-                child:
-                    const Text('NEXT', style: TextStyle(color: Colors.white)),
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.red)),
-              ),
+        type: StepperType.horizontal,
+        currentStep: currentstep,
+        steps: getSteps(),
+        onStepContinue: _continue,
+        onStepCancel: currentstep != 0 ? _cancel : null,
+        onStepTapped: _ontapped,
+        controlsBuilder: (BuildContext c, ControlsDetails ctl) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ctl.onStepCancel != null
+                  ? ElevatedButton(
+                      onPressed: ctl.onStepCancel, child: const Text("CANCEL"))
+                  : Container(),
+              const SizedBox(width: 10),
+              ElevatedButton(
+                  onPressed: ctl.onStepContinue, child: Text(buttonState))
             ],
-          ),
-        );
-      },
-    );
+          );
+        });
   }
 
   //Logics--------------------------------------------------
@@ -61,9 +50,7 @@ class _StepperWidgetState extends State<StepperWidget> {
   }
 
   void _cancel() {
-    final step = getSteps().length - 1;
     if (currentstep == 0) {
-      log(step.toString());
       return;
     }
     setState(() {
@@ -73,13 +60,18 @@ class _StepperWidgetState extends State<StepperWidget> {
   }
 
   void _continue() {
-    if (currentstep >= (getSteps().length - 1)) {
+    if (currentstep > (getSteps().length - 1)) {
       return;
+    } else if (currentstep == getSteps().length - 1) {
+      setState(() {
+        buttonState == "SUMBIT";
+      });
+    } else {
+      setState(() {
+        currentstep += 1;
+        log(currentstep.toString());
+      });
     }
-    setState(() {
-      currentstep += 1;
-      log(currentstep.toString());
-    });
   }
 
   //Steps--------------------------------------------------
