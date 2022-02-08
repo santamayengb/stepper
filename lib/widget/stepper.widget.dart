@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:stepper/widget/details.widget.dart';
 
+import 'uploads.widget.dart';
+
 class StepperWidget extends StatefulWidget {
   const StepperWidget({Key? key}) : super(key: key);
 
@@ -22,26 +24,30 @@ class _StepperWidgetState extends State<StepperWidget> {
       onStepCancel: _cancel,
       onStepTapped: _ontapped,
       controlsBuilder: (BuildContext c, ControlsDetails details) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const SizedBox(
-              width: 10,
-            ),
-            TextButton(
-              onPressed: details.onStepCancel,
-              child:
-                  const Text('Cancel', style: TextStyle(color: Colors.white)),
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.red)),
-            ),
-            TextButton(
-              onPressed: details.onStepContinue,
-              child: const Text('NEXT', style: TextStyle(color: Colors.white)),
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.red)),
-            ),
-          ],
+        return SizedBox(
+          width: double.infinity,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const SizedBox(
+                width: 10,
+              ),
+              TextButton(
+                onPressed: details.onStepCancel,
+                child:
+                    const Text('Cancel', style: TextStyle(color: Colors.white)),
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.red)),
+              ),
+              TextButton(
+                onPressed: details.onStepContinue,
+                child:
+                    const Text('NEXT', style: TextStyle(color: Colors.white)),
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.red)),
+              ),
+            ],
+          ),
         );
       },
     );
@@ -55,7 +61,9 @@ class _StepperWidgetState extends State<StepperWidget> {
   }
 
   void _cancel() {
-    if (currentstep <= (getSteps().length - 1)) {
+    final step = getSteps().length - 1;
+    if (currentstep == 0) {
+      log(step.toString());
       return;
     }
     setState(() {
@@ -85,7 +93,7 @@ class _StepperWidgetState extends State<StepperWidget> {
         Step(
           isActive: currentstep >= 1,
           title: const Text("UPLOADS"),
-          content: Column(),
+          content: const UploadWidget(),
         ),
         Step(
           isActive: currentstep >= 2,
